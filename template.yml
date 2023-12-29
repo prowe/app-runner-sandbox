@@ -1,3 +1,35 @@
 
 Resources:
-  
+  ServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: build.apprunner.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess
+
+  Service:
+    Type: AWS::AppRunner::Service
+    Properties:
+      ServiceName: prowe-apprunner-sandbox
+      SourceConfiguration:
+        AuthenticationConfiguration:
+          AccessRoleArn: !GetAtt ServiceRole.Arn
+        AutoDeploymentsEnabled: true
+        ImageRepository:
+          ImageIdentifier: "144406111952.dkr.ecr.us-east-1.amazonaws.com/prowe-app-runner-sandbox:latest"
+          ImageRepositoryType: ECR
+          ImageConfiguration:
+            Port: 3000
+      InstanceConfiguration:
+        Cpu: 1 vCPU
+        Memory: 2 GB
+
+Outputs:
+  ServiceUrl:
+    Value: !GetAtt Service.ServiceUrl

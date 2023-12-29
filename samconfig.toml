@@ -1,0 +1,11 @@
+version = 0.1
+[default.sync.parameters]
+stack_name = "prowe-app-runner-sandbox"
+
+[default.deploy.parameters]
+stack_name = "prowe-app-runner-sandbox"
+resolve_s3 = true
+s3_prefix = "prowe-app-runner-sandbox"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
