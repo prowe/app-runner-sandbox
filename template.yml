@@ -20,12 +20,15 @@ Resources:
       SourceConfiguration:
         AuthenticationConfiguration:
           AccessRoleArn: !GetAtt ServiceRole.Arn
-        AutoDeploymentsEnabled: true
+        AutoDeploymentsEnabled: false
         ImageRepository:
-          ImageIdentifier: "144406111952.dkr.ecr.us-east-1.amazonaws.com/prowe-app-runner-sandbox:latest"
+          ImageIdentifier: "144406111952.dkr.ecr.us-east-1.amazonaws.com/prowe-app-runner-sandbox:3"
           ImageRepositoryType: ECR
           ImageConfiguration:
             Port: 3000
+            RuntimeEnvironmentVariables:
+              - Name: HOSTNAME
+                Value: '0.0.0.0'
       InstanceConfiguration:
         Cpu: 1 vCPU
         Memory: 2 GB
